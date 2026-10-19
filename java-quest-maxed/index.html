@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>JAVA QUEST — MAXED EDITION</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="A Solo Leveling-inspired gamified Java learning app.">
+<meta name="theme-color" content="#05070d">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="JQ Maxed">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="grid-overlay"></div>
+
+<!-- ===== Awakening sequence ===== -->
+<div id="awaken">
+  <div class="line small fadein" style="animation-delay:.1s">A PROGRAM HAS DETECTED A LATENT USER.</div>
+  <div class="line big fadein" style="animation-delay:.9s">YOU HAVE ACQUIRED THE QUALIFICATIONS<br>TO BECOME A JAVA HUNTER.</div>
+  <div class="line small fadein" style="animation-delay:1.9s">WILL YOU ACCEPT?</div>
+  <button id="acceptBtn" class="fadein" style="animation-delay:2.6s">ARISE</button>
+</div>
+
+<!-- ===== App ===== -->
+<div class="topbar">
+  <div class="brand">
+    <div class="mark"></div>
+    <div><span>JAVA QUEST</span><small>MAXED EDITION · ALL GATES CLEARED</small></div>
+  </div>
+  <div style="display:flex; align-items:center; gap:14px;">
+    <button id="saveBtn" class="btn">💾 SAVE</button>
+    <button id="installBtn" class="btn">⬇ INSTALL</button>
+    <div class="mono" id="clockDate" style="font-size:11px;color:var(--muted);letter-spacing:1px;"></div>
+  </div>
+</div>
+
+<nav id="mainNav">
+  <button class="navtab active" data-view="home"><span class="ni">⌂</span> HOME</button>
+  <button class="navtab" data-view="dungeons"><span class="ni">🗺</span> DUNGEONS</button>
+  <button class="navtab" data-view="lessons"><span class="ni">📖</span> LESSONS</button>
+  <button class="navtab" data-view="status"><span class="ni">🧬</span> STATUS</button>
+</nav>
+
+<div id="app">
+
+  <!-- ===== HOME VIEW ===== -->
+  <div class="view active" id="view-home">
+    <div class="home-hero">
+      <div class="home-title">JAVA QUEST</div>
+      <div class="home-sub">Every line of code is a monster. Every gate is a lesson. Arise.</div>
+    </div>
+
+    <div class="bracket home-quickstat">
+      <span class="bl"></span><span class="br"></span>
+      <div class="hex" id="homeRankHex">E</div>
+      <div style="flex:1;">
+        <div style="display:flex; justify-content:space-between; align-items:baseline;">
+          <span class="gname" id="homeNameLine">PLAYER · E-Rank · Lv. 1</span>
+          <span class="mono" id="homeXpText" style="font-size:11px; color:var(--muted);">0 / 100 XP</span>
+        </div>
+        <div class="bar-track" style="margin-top:8px;"><div class="bar-fill" id="homeXpBar" style="width:0%"></div></div>
+      </div>
+    </div>
+
+    <div class="home-cards">
+      <div class="bracket home-card" data-goto="dungeons">
+        <span class="bl"></span><span class="br"></span>
+        <div class="hc-icon">🗺</div>
+        <div class="hc-title">DUNGEONS</div>
+        <div class="hc-desc">Clear Gates, defeat Bosses, and climb the ranks from E to S — this is where you actually level up.</div>
+        <div class="hc-cta">ENTER →</div>
+      </div>
+      <div class="bracket home-card" data-goto="lessons">
+        <span class="bl"></span><span class="br"></span>
+        <div class="hc-icon">📖</div>
+        <div class="hc-title">LESSON LIBRARY</div>
+        <div class="hc-desc">Every Java concept you've unlocked, in one place. Review any lesson without needing to retake its Trial.</div>
+        <div class="hc-cta">BROWSE →</div>
+      </div>
+      <div class="bracket home-card" data-goto="status">
+        <span class="bl"></span><span class="br"></span>
+        <div class="hc-icon">🧬</div>
+        <div class="hc-title">HUNTER STATUS</div>
+        <div class="hc-desc">Check your stats, spend points earned from leveling up, and take on today's Daily Quest.</div>
+        <div class="hc-cta">VIEW →</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== DUNGEONS VIEW ===== -->
+  <div class="view" id="view-dungeons">
+    <div class="bracket" style="margin-bottom:20px;">
+      <span class="bl"></span><span class="br"></span>
+      <h3 style="margin:0 0 6px; font-size:16px; color:var(--text);">GATE MAP — JAVA DUNGEON</h3>
+      <p style="margin:0; font-size:12.5px; color:var(--muted); line-height:1.5;">Clear every Quest inside a Gate to challenge its Boss. Defeating a Boss breaks the seal on the next Gate. There is no going back to being an E-Rank once you've seen what's inside a Boss room.</p>
+    </div>
+    <div id="gates"></div>
+  </div>
+
+  <!-- ===== LESSONS VIEW ===== -->
+  <div class="view" id="view-lessons">
+    <div class="bracket" style="margin-bottom:20px;">
+      <span class="bl"></span><span class="br"></span>
+      <h3 style="margin:0 0 6px; font-size:16px; color:var(--text);">LESSON LIBRARY</h3>
+      <p style="margin:0; font-size:12.5px; color:var(--muted); line-height:1.5;">Every concept you've unlocked, for review. Sealed Gates stay hidden until their Boss falls in the Dungeons tab.</p>
+    </div>
+    <div id="lessonLibrary"></div>
+  </div>
+
+  <!-- ===== STATUS VIEW ===== -->
+  <div class="view" id="view-status">
+    <div class="bracket status" style="max-width:520px; margin:0 auto;">
+      <span class="bl"></span><span class="br"></span>
+      <h2 id="pName">PLAYER</h2>
+      <div class="mono" style="font-size:11px;color:var(--muted);letter-spacing:1px;" id="pJob">Job: Unemployed</div>
+
+      <div class="rank-row">
+        <div class="hex" id="rankHex">E</div>
+        <div class="rank-info">
+          <div class="title">RANK / LEVEL</div>
+          <div class="gname" id="rankName">E-Rank &nbsp;·&nbsp; Lv. 1</div>
+        </div>
+      </div>
+
+      <div class="xp-label"><span>XP</span><span id="xpText">0 / 100</span></div>
+      <div class="bar-track"><div class="bar-fill" id="xpBar" style="width:0%"></div></div>
+
+      <div class="stats" id="statsBox"></div>
+      <div class="points-note" id="pointsNote"></div>
+
+      <div class="daily">
+        <h3>⚠ DAILY QUEST</h3>
+        <p>Failure to complete the Daily Quest before reset will result in... nothing, actually. This isn't that kind of dungeon. But your streak will know.</p>
+        <button class="btn" id="dailyBtn">ACCEPT DAILY QUEST</button>
+      </div>
+    </div>
+
+    <!-- Save data panel -->
+    <div class="bracket savepanel" style="max-width:520px; margin:20px auto 0;">
+      <span class="bl"></span><span class="br"></span>
+      <h3 style="margin:0 0 6px; font-size:14px; letter-spacing:2px; color:var(--cyan);">💾 SAVE DATA</h3>
+      <div class="mono" id="saveStatus">AUTO-SAVE ON</div>
+      <p>Your progress saves to this device automatically after every change. Use a backup file to move it to another device or keep it safe if you clear your browser data.</p>
+      <div class="save-actions">
+        <button class="btn solid" id="saveNowBtn">SAVE NOW</button>
+        <button class="btn" id="exportBtn">⬇ EXPORT BACKUP</button>
+        <button class="btn" id="importBtn">⬆ IMPORT BACKUP</button>
+        <button class="btn danger" id="resetBtn">RESTORE MAXED STATE</button>
+      </div>
+      <input type="file" id="importFile" accept=".json,application/json" style="display:none">
+    </div>
+  </div>
+
+  <footer class="note">SYSTEM STATUS: ONLINE — PROGRESS AUTO-SAVES TO THIS DEVICE</footer>
+</div>
+
+<!-- Quest Modal -->
+<div class="overlay" id="overlay">
+  <div class="bracket modal" id="modalBox">
+    <span class="bl"></span><span class="br"></span>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<div id="toasts"></div>
+<div id="levelflash"><div class="lu">LEVEL UP</div></div>
+
+<script src="drills.js" defer></script>
+<script src="script.js" defer></script>
+</body>
+</html>
